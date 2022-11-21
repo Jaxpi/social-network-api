@@ -18,9 +18,9 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-//   // create a new thought
+// create a new thought
   createThought(req, res) {
-    Thoughts.create(req.body, {$addToSet: {thought: req.params.thoughtId}}, {new: true})
+    Thoughts.create(req.body, {$addToSet: {thoughts: req.params.thoughtId}}, {new: true})
       .then((thought) => res.json(thought))
       .catch((err) => res.status(500).json(err));
   },
@@ -31,7 +31,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-//   // Delete a thought and associated apps
+// Delete a thought and associated apps
   deleteThought(req, res) {
     Thoughts.findByIdAndDelete(req.params.thoughtId)
       .then((thought) =>
