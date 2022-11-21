@@ -37,14 +37,14 @@ module.exports = {
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: 'No thought with that ID' })
-          : Thoughts.deleteMany({ _id: { $in: thought.thoughts } })
+          : Thoughts.deleteMany({ _id: { $in: thought.reactions } })
       )
-      .then(() => res.json({ message: 'thought and associated apps deleted!' }))
+      .then(() => res.json({ message: 'thought and associated reactions deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
 
-  addFriend(req, res) {
-    Thoughts.findByIdAndUpdate(req.params.thoughtId, {$addToSet: {friends: req.params.friendId}}, {new: true})
+  addReaction(req, res) {
+    Thoughts.findByIdAndUpdate(req.params.thoughtId, {$addToSet: {reactions: req.params.reactionId}}, {new: true})
     .then((thoughtData) => {
         !thoughtData
             ? res.status(404).json({message: "No thought with that ID"})
@@ -52,11 +52,11 @@ module.exports = {
     })
     .catch((err) => res.status(500).json(err));
   },
-  deleteFriend(req, res) {
-    Thoughts.findByIdAndUpdate(req.params.thoughtId, {$pull: {friends: req.params.friendId}}, {new: true})
+  deleteReaction(req, res) {
+    Thoughts.findByIdAndUpdate(req.params.thoughtId, {$pull: {reactions: req.params.reactionId}}, {new: true})
     .then((thoughtData) => {
         !thoughtData
-            ? res.status(404).json({message: "No friend with that ID"})
+            ? res.status(404).json({message: "No reaction with that ID"})
             : res.json(thoughtData)
     })
     .catch((err) => res.status(500).json(err));
