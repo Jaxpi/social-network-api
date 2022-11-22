@@ -56,7 +56,7 @@ module.exports = {
   addReaction(req, res) {
     Thoughts.findByIdAndUpdate(
       req.params.thoughtId,
-      { $addToSet: { reactions: req.params.reactionId } },
+      { $addToSet: { reactions: req.body } },
       { new: true }
     )
       .populate({ path: "reactions", select: "-__v" })
