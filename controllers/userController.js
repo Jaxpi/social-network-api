@@ -1,65 +1,81 @@
-const { Users, Thoughts } = require('../models');
+const { Users, Thoughts } = require("../models");
 
 module.exports = {
-  // Get all users
+  // get all users
   getUsers(req, res) {
     Users.find()
-    .populate('thoughts')
+      .populate({path: 'thoughts', select: '-__v'})
+      .populate({path: 'friends', select: '-__v'})
       .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
-  // Get a single user
+  // get a single user
   getSingleUser(req, res) {
     Users.findById(req.params.userId)
-      .select('-__v')
+    .populate({path: 'thoughts', select: '-__v'})
+    .populate({path: 'friends', select: '-__v'})
+      .select("-__v")
       .then((user) =>
         !user
-          ? res.status(404).json({ message: 'No user with that ID' })
+          ? res.status(404).json({ message: "No user with that ID" })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
   },
-//   // create a new user
+  // create a new user
   createUser(req, res) {
     Users.create(req.body)
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
-
+  // update a user
   updateUser(req, res) {
-    Users.findByIdAndUpdate(req.params.userId, req.body, {new: true})
+    Users.findByIdAndUpdate(req.params.userId, req.body, { new: true })
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
 
-//   // Delete a user and associated apps
+  // delete a user and associated apps
   deleteUser(req, res) {
     Users.findByIdAndDelete(req.params.userId)
       .then((user) =>
         !user
-          ? res.status(404).json({ message: 'No user with that ID' })
+          ? res.status(404).json({ message: "No user with that ID" })
           : Thoughts.deleteMany({ _id: { $in: user.thoughts } })
       )
-      .then(() => res.json({ message: 'User and associated thoughts deleted!' }))
+      .then(() =>
+        res.json({ message: "User and associated thoughts deleted!" })
+      )
       .catch((err) => res.status(500).json(err));
   },
 
+  // add a friend
   addFriend(req, res) {
-    Users.findByIdAndUpdate(req.params.userId, {$addToSet: {friends: req.params.friendId}}, {new: true})
-    .then((userData) => {
+    Users.findByIdAndUpdate(
+      req.params.userId,
+      { $addToSet: { friends: req.params.friendId } },
+      { new: true }
+    )
+      .then((userData) => {
         !userData
-            ? res.status(404).json({message: "No user with that ID"})
-            : res.json(userData)
-    })
-    .catch((err) => res.status(500).json(err));
+          ? res.status(404).json({ message: "No user with that ID" })
+          : res.json(userData);
+      })
+      .catch((err) => res.status(500).json(err));
   },
+
+  // delete a friend
   deleteFriend(req, res) {
-    Users.findByIdAndUpdate(req.params.userId, {$pull: {friends: req.params.friendId}}, {new: true})
-    .then((userData) => {
+    Users.findByIdAndUpdate(
+      req.params.userId,
+      { $pull: { friends: req.params.friendId } },
+      { new: true }
+    )
+      .then((userData) => {
         !userData
-            ? res.status(404).json({message: "No friend with that ID"})
-            : res.json(userData)
-    })
-    .catch((err) => res.status(500).json(err));
-  }
+          ? res.status(404).json({ message: "No friend with that ID" })
+          : res.json(userData);
+      })
+      .catch((err) => res.status(500).json(err));
+  },
 };
