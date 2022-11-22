@@ -79,3 +79,32 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 };
+// \[
+// 	{
+// 		"_id": "637bf0e7d22685d315186be5",
+// 		"username": "ABC",
+// 		"email": "abc@email.com",
+// 		"thoughts": [],
+// 		"friends": [],
+// 		"__v": 0,
+// 		"friendCount": 0
+// 	},
+// 	{
+// 		"_id": "637bf4268f728f088378ff07",
+// 		"username": "GHI",
+// 		"email": "ghi@email.com",
+// 		"thoughts": [],
+// 		"friends": [],
+// 		"__v": 0,
+// 		"friendCount": 0
+// 	},
+// 	{
+// 		"_id": "637bfe9904f263e538ac3a03",
+// 		"username": "DEF",
+// 		"email": "def@email.com",
+// 		"thoughts": [],
+// 		"friends": [],
+// 		"__v": 0,
+// 		"friendCount": 0
+// 	}
+// ]
