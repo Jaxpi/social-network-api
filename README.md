@@ -1,6 +1,6 @@
-# social-network-api
+# Social Network API
 
-Please view the walkthrough at this link:
+Please view the walkthrough at this link for a visual guide to accessing and utilizing this application:
 https://watch.screencastify.com/v/ChyZzxQDQFenfGM0ddZa<br>
 
 
