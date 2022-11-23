@@ -53,7 +53,7 @@ module.exports = {
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "No thought with that ID" })
-          : Thoughts.deleteMany({ _id: { $in: thought.reactions } })
+          : Thoughts.deleteMany({ _id: { $in: thought.reactionId } })
       )
       .then(() =>
         res.json({ message: "thought and associated reactions deleted!" })
@@ -67,7 +67,6 @@ module.exports = {
       { $addToSet: { reactions: req.body } },
       { new: true }
     )
-      .populate({ path: "reactions", select: "-__v" })
       .then((thoughtData) => {
         !thoughtData
           ? res.status(404).json({ message: "No thought with that ID" })
@@ -79,7 +78,7 @@ module.exports = {
   deleteReaction(req, res) {
     Thoughts.findByIdAndUpdate(
       req.params.thoughtId,
-      { $pull: { reactions: req.params.reactionId } },
+      { $pull: { reactions: {_id : req.params.reactionId }} },
       { new: true }
     )
       .then((thoughtData) => {

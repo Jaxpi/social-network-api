@@ -25,3 +25,10 @@ router.route('/:thoughtId/reactions').post(addReaction)
 router.route('/:thoughtId/reactions/:reactionId').delete(deleteReaction)
 
 module.exports = router;
+
+// create thought needs thoughtText, username
+
+// add reaction needs reactionBody, username
+
+// thought id: 637d6d8eb4fc23d23c3060e2
+// reaction id: 637d6e42b4fc23d23c3060e9

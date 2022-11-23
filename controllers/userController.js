@@ -41,7 +41,7 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No user with that ID" })
-          : Thoughts.deleteMany({ _id: { $in: user.thoughts } })
+          : Thoughts.deleteMany({ _id: { $in: user.thoughts._id } })
       )
       .then(() =>
         res.json({ message: "User and associated thoughts deleted!" })
@@ -79,32 +79,3 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 };
-// \[
-// 	{
-// 		"_id": "637bf0e7d22685d315186be5",
-// 		"username": "ABC",
-// 		"email": "abc@email.com",
-// 		"thoughts": [],
-// 		"friends": [],
-// 		"__v": 0,
-// 		"friendCount": 0
-// 	},
-// 	{
-// 		"_id": "637bf4268f728f088378ff07",
-// 		"username": "GHI",
-// 		"email": "ghi@email.com",
-// 		"thoughts": [],
-// 		"friends": [],
-// 		"__v": 0,
-// 		"friendCount": 0
-// 	},
-// 	{
-// 		"_id": "637bfe9904f263e538ac3a03",
-// 		"username": "DEF",
-// 		"email": "def@email.com",
-// 		"thoughts": [],
-// 		"friends": [],
-// 		"__v": 0,
-// 		"friendCount": 0
-// 	}
-// ]
