@@ -17,3 +17,9 @@ db.once("open", () => {
     console.log(`API server running on port ${PORT}!`);
   });
 });
+
+db.collection("Thoughts").drop(function (err, delok) {
+  if (err) throw err;
+  if (delok) console.log("collection deleted");
+  db.close();
+})

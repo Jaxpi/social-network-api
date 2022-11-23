@@ -22,14 +22,22 @@ module.exports = {
   },
   // create a new thought
   createThought(req, res) {
-    Thoughts.create(
-      req.body,
-      { $addToSet: { thoughts: req.params.thoughtId } },
-      { _id: req.body.userId },
-      { $push: { thoughts: Thoughts._id } },
-      { new: true }
-    )
-      .then((thought) => res.json(thought))
+    Thoughts.create(req.body)
+      .then(
+        (thought) => {
+        Users.findByIdAndUpdate(
+            req.params.userId,
+            { $addToSet: { thoughts: thought } },
+            { new: true }
+          )
+            .then((userData) => {
+              !userData
+                ? res.status(404).json({ message: "No user with that ID" })
+                : res.json(userData);
+            })
+            .catch((err) => res.status(500).json(err))
+        }
+      )
       .catch((err) => res.status(500).json(err));
   },
   // update a thought
