@@ -1,7 +1,10 @@
 # Social Network API
 
+<img src="assets/mainscreenshot.jpg" style="width:300px; height auto;">
+<br>
 Please view the walkthrough at this link for a visual guide to accessing and utilizing this application:
-https://watch.screencastify.com/v/ChyZzxQDQFenfGM0ddZa<br>
+
+[View the Walkthrough Here](https://watch.screencastify.com/v/ChyZzxQDQFenfGM0ddZa)<br>
 
 
 ## Description
